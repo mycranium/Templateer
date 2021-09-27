@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" ?>
+<wrapper>
+    <meta>
+        <artist>MDR</artist>
+        <rootFolder>~/Creative%20Cloud%20Files/After%20Effects/</rootFolder>
+        <extPath>~/Videos/Source/</extPath>
+    </meta>
+    <projects>
+        <project default = "" type = "Banter" subType = "90sec">
+            <title>How to Save Time</title>
+            <shootDate>011415</shootDate>
+            <group>A</group>
+            <srcVidFile>B90_How-To-Save-Time_011415A.mov</srcVidFile>
+        </project>
+        <project default = "" type = "Banter" subType = "">
+            <title>When Doves Cry</title>
+            <shootDate>011415</shootDate>
+            <group>A</group>
+            <srcVidFile>B_When-Doves-Cry_011415A.mov</srcVidFile>
+        </project>
+        <project default = "on" type = "Banter" subType = "credits">
+            <title>Spinners Save Lives</title>
+            <shootDate>011415</shootDate>
+            <group>A</group>
+            <srcVidFile>BCr_Spinners-Save-Lives_011415A.mov</srcVidFile>
+        </project>
+    </projects>
+    <presets>
+        <preset type = "comp" format = "HD1080" default = "">1920, 1080, 1, 120</preset>
+        <preset type = "comp" format = "HD720" default = "on">1280, 720, 1, 120</preset>
+        <preset type = "fps" format = "24Drop" default = "on">23.976</preset>
+        <preset type = "fps" format = "24" default = "">24</preset>
+        <preset type = "fps" format = "30Drop"  default = "">29.97</preset>
+        <preset type = "fps" format = "30" default = "">30</preset>
+        <preset type = "text" format = "title" default="on">60, "true", [1,1,1], "false", [0,0,0], 0, "Hand Of Sean", "true", "center", 50</preset>
+        <preset type = "text" format = "L3rd" default = "">30, "true", "[1,0,1]", "true", "[0,0.5,0]", 0, "GothamNarrow-Book", "false", "right", 24</preset>
+        <preset type = "text" format = "other" default = "">130, "true", [1,0,1], "true", [0,0.5,0], 0, "GothamNarrow-Ultra", "false", "right," 96</preset>
+    </presets>
+    <assets>
+        <background type1 = "Banter" subType = "none" type2 = "" type3 = "" default = "">_D711681.MOV</background>
+        <background type1 = "Gib" subType = "none" type2 = "" type3 = "" default = "">063011-29%201920%20x%201080%2024fps.mov</background>
+        <background type1 = "Banter" type2 = "" type3 = "" subType = "credits" default = "on">063011-29 1920 x 1080 24fps.mov</background>
+        <background type1 = "Banter" subType = "90sec" type2 = "" type3 = "" default = "">063011-29 1920 x 1080 24fps.mov</background>
+    </assets>
+    <folders>
+        <folder name="Premiere" disk = "yes" proj = "no"></folder>
+        <folder name="Renders" disk = "yes" proj = "no"></folder>
+        <folder name="Prerenders" disk = "yes" proj = "no"></folder>
+        <folder name="After Effects" disk = "yes" proj = "no"></folder>
+        <folder name = "00_Comps" disk = "no" proj = "yes">
+            <folder name = "Precomps" disk = "no" proj = "yes"></folder>
+        </folder>
+        <folder name="01_Assets" disk = "yes" proj = "yes" dName = "Assets">
+            <folder name = "Footage" disk = "yes" proj = "yes" dName = "Footage">
+                <folder name = "Backgrounds" disk = "no" proj = "yes"></folder>
+                <folder name = "Host" disk = "yes" proj = "yes" dName = "Host"></folder>
+            </folder>
+            <folder name = "Images" disk = "yes" proj = "yes" dname = "Images">
+                <folder name = "JPG" disk = "yes" proj = "yes" dName = "JPG"></folder>
+                <folder name = "PNG" disk = "yes" proj = "yes" dName = "PNG"></folder>
+                <folder name = "PSD" disk = "yes" proj = "yes" dName = "PSD"></folder>
+                <folder name = "Vector" disk = "yes" proj = "yes" dName = "Vector"></folder>
+            </folder>
+            <folder name = "Audio" disk = "yes" proj = "yes" dName = "Audio"></folder>
+        </folder>
+    </folders>
+</wrapper>
