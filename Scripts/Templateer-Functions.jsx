@@ -61,27 +61,29 @@ try {
     // GET FOLDER STRUCTURE FROM XML AND MAKE DISK FOLDERS
     function makeFolders(){
     try {
-        var projFolderString = my.dat.meta.rootFolder + "ScriptProjects/" + my.dflts.titles.cTitle
-        var dskPath = projFolderString + "/";
-        writeFolder(dskPath);
+        var projFolderString = my.dat.meta.rootFolder + "ScriptProjects/" + my.dflts.titles.cTitle // assemble the project folder path
+        var dskPath = projFolderString + "/"; // add a slash to ake it a folder ?? Not sure why this doesn't just get added above ??
+        writeFolder(dskPath); // write the folder to disk
 
-        var myPath;
-        var diskFolders = my.dat.folders.descendants().(@disk == "yes");
+        var myPath; // create variable to hold path part for subfolders
+        var diskFolders = my.dat.folders.descendants().(@disk == "yes"); // get all folders (at any level) that are specified for disk into xml collection 
         // Do the disk folders
-        for (var s = 0; s < diskFolders.length(); s++) {
-            var finalPath;
-            myPath = "";
-            var currLmnt = diskFolders.child(s);
-            var topLev = "";
-            if (currLmnt.parent().name() == "folders") {
-                topLev = currLmnt.@name + "/";      // Previously, topLev had been defined here. I moved the declaration out above.
+        // We don't create a folder, then put all the subfolders into it. Rather each folder, at any level, gets written with its full path.
+        // That's why the while loop doesn't create redundant folders.
+        for (var s = 0; s < diskFolders.length(); s++) { // Start looping folders
+            var finalPath; // Container variable for final string
+            myPath = ""; // Blanking mypath for each loop iteration ?? Why not just create it here ??
+            var currLmnt = diskFolders.child(s); // gets all child elements at index s
+            var topLev = ""; // initialize topLv variable to hold name of top-level folder's path part
+            if (currLmnt.parent().name() == "folders") { // if the first parent element is the folders container, it is a top-level folder
+                topLev = currLmnt.@name + "/";      // Put the top level folder's name in here with a slash.
             }
-            while(currLmnt.parent().name() != "folders") {
-                myPath = currLmnt.@name + "/" + myPath;
-                currLmnt = currLmnt.parent();
+            while(currLmnt.parent().name() != "folders") { // Invokes only on iterations where s is a sub-folder
+                myPath = currLmnt.@name + "/" + myPath; // prepend this folder's name and slash to myPath
+                currLmnt = currLmnt.parent(); // stops the loop once it gets up to top level
             }
-            finalPath = dskPath + topLev + myPath;      // This was messed up, with erroneous slashes.
-            writeFolder(finalPath);
+            finalPath = dskPath + topLev + myPath;      // Assemble the final path
+            writeFolder(finalPath); // write each folder as the name is finally assembled
         }    
     } catch(err){ alert("Oops. On line " + err.line + " of \"makeFolders()\" you got " + err.message);}
     }
@@ -89,21 +91,21 @@ try {
     // GET PROJECT FOLDER STRUCTURE FROM SOURCE DATA AND CREATE IT IN THE PROJECT
     function makeProjectFolders() {    
     try {
-        var projFolders = my.dat.folders.descendants().(@proj == "yes");
-        var folderList = {};
+        var projFolders = my.dat.folders.descendants().(@proj == "yes"); // collect all folders specified for project
+        var folderList = {}; // empty object
 
-        for (var j = 0; j < projFolders.length(); j++) {
-            var currLmnt = projFolders.child(j);
-            var fldrName = currLmnt.@name.toString();
-            var fldrParent = currLmnt.parent().@name.toString();
-            fldrParent = (fldrParent == "") ? "root" : fldrParent;
-            var fldrObj = app.project.items.addFolder(fldrName);
-            folderList[fldrName] = { name: fldrName, parent: fldrParent, fldrOb: fldrObj };
+        for (var j = 0; j < projFolders.length(); j++) { // loop the collection
+            var currLmnt = projFolders.child(j); // get folder at index j
+            var fldrName = currLmnt.@name.toString(); // stringify name
+            var fldrParent = currLmnt.parent().@name.toString();  // stringify parent folder name
+            fldrParent = (fldrParent == "") ? "root" : fldrParent; // if there is no name, call it root
+            var fldrObj = app.project.items.addFolder(fldrName); // add the folder to the project
+            folderList[fldrName] = { name: fldrName, parent: fldrParent, fldrOb: fldrObj }; // push new this folder object into fldrList object
         }
-        for (var folder in folderList) {
-            var thisFolder = folderList[folder];
-            if (thisFolder.parent != "root") {
-            thisFolder.fldrOb.parentFolder = folderList[thisFolder.parent].fldrOb;
+        for (var folder in folderList) { // iterate the folder list object
+            var thisFolder = folderList[folder]; // pull one fldr obj out for processing
+            if (thisFolder.parent != "root") { // if it's a subfolder
+            thisFolder.fldrOb.parentFolder = folderList[thisFolder.parent].fldrOb; // set the parent
             }
         }
         return folderList;
@@ -113,8 +115,8 @@ try {
     // ADD THE MAIN COMP
     function addNewComp(){//     ADD A NEW COMP 
     try {
-        var cs = my.dflts.comp;
-         var mainComp =  app.project.items.addComp(cs[0], cs[1], cs[2], cs[3], cs[4], cs[5]);
+        var cs = my.dflts.comp; // this should be an array, parsed as JSON
+         var mainComp =  app.project.items.addComp(cs[0], cs[1], cs[2], cs[3], cs[4], cs[5]); // values from assembled preset
          writeLn("New comp created.");
          mainComp.openInViewer();// OPEN IN VIEWER, DUH
          return mainComp;//HAND THE OBJECT BACK TO THE CALLING FUNCTION
